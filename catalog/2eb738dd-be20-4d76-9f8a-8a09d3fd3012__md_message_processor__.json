@@ -1,0 +1,10 @@
+{
+    "inputMessageMetadata": {},
+    "outputMessageMetadata": {
+        "flowVariables": {
+            "ordersData": {}
+        }
+    },
+    "id": "2eb738dd-be20-4d76-9f8a-8a09d3fd3012",
+    "version": "5.2.0.0"
+}

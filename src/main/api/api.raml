@@ -1,0 +1,114 @@
+#%RAML 0.8
+title: modusbox-orders
+baseUri: http://localhost:8081/api/
+version: v1
+
+/orders:
+  get:
+    description: Retrieve a JSON array of orders
+    queryParameters:
+      customerName:
+        displayName: Customer Name
+        type: string
+        description: Customer's full name
+        example: John Doe
+        required: false      
+      placementDate:
+        displayName: Placement Date
+        type: string
+        description: The date the order was placed 
+        example: 2016-01-31
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/v1-orders.json
+  put:
+  post:
+  delete:
+     
+  /{orderId}:
+    get:
+      description: Retrieve a JSON object of specific order id
+      responses:
+        200:
+          body:
+             application/json:
+               example: !include examples/v1-order.json
+          
+    /orderItems:
+      get:
+        description: Retrieve a JSON array of order items for specified order
+        responses:
+          200:
+            body:
+              application/json:
+                example: !include examples/v1-orderItems.json
+
+/orderItems:
+  get:
+    queryParameters:
+      orderId:
+        displayName: Order Id
+        type: number
+        description: Order Primary Key
+        example: 14673
+        required: false
+      itemId:
+        displayName: Item Id
+        type: number
+        description: Item Primary Key
+        example: 37422
+        required: false
+    description: Retrieve a JSON array of order items
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/v1-orderItems.json
+  put:
+  post:
+  delete:
+      
+  /{orderItemId}:
+    get:
+      description: Retrieve a JSON object of order item using order item id
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/v1-orderItem.json 
+         
+/items:
+  get:
+    queryParameters:
+      itemName:
+        displayName: Item Name
+        type: string
+        description: Name of the Item
+        example: 25 Gal Bleach
+        required: false		  
+      itemCost:
+        displayName: Item Cost
+        type: string
+        description: Cost of the Item
+        example: $45
+        required: false
+    description: Retrieve a JSON array of items
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/v1-items.json
+  put:
+  post:
+  delete:
+  /{itemId}:
+    get:
+      description: Retrieve a JSON object of specific item id
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/v1-item.json

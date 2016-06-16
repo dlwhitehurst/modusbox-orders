@@ -1,0 +1,19 @@
+{
+  "orderId": 1233,
+  "placementDate": "2016-06-02",
+  "customerName": "Sally Hansen",
+   "orderItems":[
+     {
+       "orderItemId": 1323
+       "orderId": 438577,
+       "itemId": 23058,
+       "itemCount": 3
+     },
+     {
+       "orderItemId": 1323
+       "orderId": 438577,
+       "itemId": 23058,
+       "itemCount": 3
+     }
+   ]  
+}

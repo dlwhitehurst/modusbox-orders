@@ -1,0 +1,12 @@
+[
+  {
+    "itemId": 12,
+    "itemName": "12 oz. Salt",
+    "itemCost": "$2.00"
+  },
+  {
+    "itemId": 18,
+    "itemName": "6 oz. Ground Pepper",
+    "itemCost": "$0.80"
+  }
+]

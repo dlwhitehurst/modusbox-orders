@@ -1,0 +1,48 @@
+[
+  {
+    "orderId": 1233,
+    "placementDate": "2016-06-02",
+    "customerName": "Sally Hansen",
+     "orderItems":[
+       {
+         "orderItemId": 1323,
+         "orderId": 438577,
+         "itemId": 23058,
+         "itemName": "Salt",
+         "itemCount": 3,
+         "qtyItemCost": "$2.76"
+       },
+       {
+         "orderItemId": 1323,
+         "orderId": 438577,
+         "itemId": 23058,
+         "itemName": "Pepper",
+         "itemCount": 3,
+         "qtyItemCost": "$8.79"
+       }
+     ]  
+  },
+  {
+    "orderId": 1233,
+    "placementDate": "2016-06-02",
+    "customerName": "Billy Wilson",
+     "orderItems":[
+       {
+         "orderItemId": 1323,
+         "orderId": 438577,
+         "itemId": 23058,
+         "itemName": "Wheat Flour",
+         "itemCount": 3,
+         "qtyItemCost": "$10.12"
+       },
+       {
+         "orderItemId": 1323,
+         "orderId": 438577,
+         "itemId": 23058,
+         "itemName": "Tomato Paste",
+         "itemCount": 3,
+         "qtyItemCost": "$9.21"
+       }
+     ]  
+  }
+]					 
