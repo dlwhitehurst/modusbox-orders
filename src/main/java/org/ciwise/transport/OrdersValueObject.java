@@ -11,12 +11,8 @@ package org.ciwise.transport;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.ciwise.common.BaseObject;
-import org.mule.api.MuleEventContext;
-import org.mule.api.MuleMessage;
-import org.mule.api.lifecycle.Callable;
 
 /**
  * @author <a href="mailto:david@ciwise.com">David L. Whitehurst</a>
@@ -28,6 +24,11 @@ public class OrdersValueObject extends BaseObject {
 	private String customerName;
 	private String preparedDate;
 	
+	List<OrderItemsValueObject> items;
+	
+	public OrdersValueObject() {
+		this.items = new ArrayList<OrderItemsValueObject>();
+	}
 	
 	/**
 	 * @return the orderId
@@ -88,5 +89,19 @@ public class OrdersValueObject extends BaseObject {
 	public int hashCode() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	/**
+	 * @return the items
+	 */
+	public List<OrderItemsValueObject> getItems() {
+		return items;
+	}
+
+	/**
+	 * @param items the items to set
+	 */
+	public void setItems(List<OrderItemsValueObject> items) {
+		this.items = items;
 	}
 }
