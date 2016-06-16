@@ -160,6 +160,7 @@
             <version>${mule.version}</version>
             <scope>provided</scope>
         </dependency>
+        <!--  For callable unit testing -->
     </dependencies>
 
 	<repositories>

@@ -23,24 +23,24 @@
 
 package org.ciwise.transport;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.Before;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Test;
+import org.mule.DefaultMuleEventContext;
+import org.mule.api.MuleEvent;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 /**
  * @author <a href="mailto:david@ciwise.com">David L. Whitehurst</a>
  *
  */
-public class TestOrdersTransformSingleton extends org.mule.tck.junit4.AbstractMuleContextTestCase {
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-		this.setUpMuleContext();
-	}
+public class TestOrdersTransformSingleton extends AbstractMuleContextTestCase {
 	
 	@Test
 	public void testOrdersTransformSingleton() {
@@ -48,8 +48,40 @@ public class TestOrdersTransformSingleton extends org.mule.tck.junit4.AbstractMu
 		assertNotNull(obj);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void testCallableInterface() {
-		this.testCallableInterface();
+		 // Create test data
+		  LinkedList<Map> payload = new LinkedList<Map>();
+		  payload.add(getMap());
+		  MuleEvent event = null;
+		  List<OrdersValueObject> list = null;
+		  try {
+			event = getTestEvent(payload, muleContext);
+			list = (List<OrdersValueObject>) new OrdersTransformSingleton().onCall(new DefaultMuleEventContext(event));
+		  } catch (Exception e) {
+			e.printStackTrace();
+		 }
+	      
+	      // Assert test data
+		  if (list != null) {
+			  OrdersValueObject obj = list.get(0);
+			  assertEquals(obj.getCustomerName(), "Popeye TheSailor");
+		  }
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private Map getMap() {
+		Map map = new HashMap();
+		map.put("orderId", 1);
+		map.put("orderItemId", 2);
+		map.put("itemId", 2);
+		map.put("itemName", "Salt Water Taffy");
+		map.put("itemCost", "$3.50");
+		map.put("itemCount", "5");
+		map.put("customerName", "Popeye TheSailor");
+		map.put("placementDate", 1234556677);
+		
+		return map;
 	}
 }
