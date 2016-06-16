@@ -60,6 +60,14 @@ http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/jso
     </flow>
     <flow name="get:/orders/{orderId}:api-config">
         <set-payload value="{&#xD;&#xA;  &quot;orderId&quot;: 1233,&#xD;&#xA;  &quot;placementDate&quot;: &quot;2016-06-02&quot;,&#xD;&#xA;  &quot;customerName&quot;: &quot;Sally Hansen&quot;,&#xD;&#xA;   &quot;orderItems&quot;:[&#xD;&#xA;     {&#xD;&#xA;       &quot;orderItemId&quot;: 1323&#xD;&#xA;       &quot;orderId&quot;: 438577,&#xD;&#xA;       &quot;itemId&quot;: 23058,&#xD;&#xA;       &quot;itemCount&quot;: 3&#xD;&#xA;     },&#xD;&#xA;     {&#xD;&#xA;       &quot;orderItemId&quot;: 1323&#xD;&#xA;       &quot;orderId&quot;: 438577,&#xD;&#xA;       &quot;itemId&quot;: 23058,&#xD;&#xA;       &quot;itemCount&quot;: 3&#xD;&#xA;     }&#xD;&#xA;   ]  &#xD;&#xA;}" doc:name="Set Payload"/>
+        <db:select config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[SELECT a.orderId, a.customerName, a.placementDate, b.orderItemId, b.itemId, c.itemName, b.itemCount, c.itemCost FROM modusbox.orders a, modusbox.orderitems b, modusbox.items c WHERE a.orderId = b.orderId AND b.itemId = c.itemId AND a.orderId = #[message.inboundProperties.'http.uri.params'.orderId]]]></db:parameterized-query>
+        </db:select>
+        <component doc:name="Java">
+			<spring-object bean="OrdersTransformSingleton" />
+		</component>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+        <logger level="INFO" doc:name="Logger"/>
     </flow>
     <flow name="get:/orders/{orderId}/orderItems:api-config">
         <set-payload value="[&#xD;&#xA;  {&#xD;&#xA;    &quot;orderItemId&quot;: 1323&#xD;&#xA;    &quot;orderId&quot;: 438577,&#xD;&#xA;&#x9;&quot;itemId&quot;: 23058,&#xD;&#xA;    &quot;itemCount&quot;: 3&#xD;&#xA;  },&#xD;&#xA;  {&#xD;&#xA;    &quot;orderItemId&quot;: 5629&#xD;&#xA;    &quot;orderId&quot;: 89853,&#xD;&#xA;    &quot;itemId&quot;: 3378,&#xD;&#xA;    &quot;itemCount&quot;: 5&#xD;&#xA;  }&#xD;&#xA;]" doc:name="Set Payload"/>
