@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 David L. Whitehurst and CI Wise Inc.
+ * Copyright (c) 2016 David L. Whitehurst
  *
  * Permission is hereby granted, free of charge, to any person 
  * obtaining a copy of this software and associated documentation 
@@ -21,14 +21,14 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package org.ciwise.transport;
+package org.dlw.transport;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.ciwise.common.BaseObject;
+import org.dlw.common.BaseObject;
 import org.mule.api.MuleEventContext;
 import org.mule.api.MuleMessage;
 import org.mule.api.lifecycle.Callable;

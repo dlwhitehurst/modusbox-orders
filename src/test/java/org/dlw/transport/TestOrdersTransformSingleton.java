@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 David L. Whitehurst and CI Wise Inc.
+ * Copyright (c) 2016 David L. Whitehurst
  *
  * Permission is hereby granted, free of charge, to any person 
  * obtaining a copy of this software and associated documentation 
@@ -21,7 +21,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package org.ciwise.transport;
+package org.dlw.transport;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -31,6 +31,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.dlw.transport.OrdersTransformSingleton;
+import org.dlw.transport.OrdersValueObject;
 import org.junit.Test;
 import org.mule.DefaultMuleEventContext;
 import org.mule.api.MuleEvent;

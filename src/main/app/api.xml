@@ -8,12 +8,12 @@ http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/jso
     <http:listener-config name="api-httpListenerConfig" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
     <apikit:config name="api-config" raml="api.raml" consoleEnabled="true" consolePath="console" doc:name="Router"/>
     <db:mysql-config name="MySQL_Configuration" host="localhost" port="3306" user="root" password="RadioBuzz0706" database="modusbox" doc:name="MySQL Configuration"/>
-    
-    <spring:beans>
+
+	<spring:beans>
 	  <spring:bean id="ordersTransform" name="OrdersTransformSingleton"
 		class="org.ciwise.transport.OrdersTransformSingleton" scope="singleton">
 	  </spring:bean>
-    </spring:beans>
+	</spring:beans>    
     
     <flow name="api-main">
         <http:listener config-ref="api-httpListenerConfig" path="/api/*" doc:name="HTTP"/>

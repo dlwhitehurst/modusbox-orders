@@ -2,7 +2,20 @@
 title: modusbox-orders
 baseUri: http://localhost:8081/api/
 version: v1
-
+securitySchemes:
+  - basic:
+      type: Basic Authentication
+traits:
+  - secured:
+      description: Some requests require authentication
+  - unsecured:
+      description: This is not secured
+            
+/auth:
+  post:
+    description: Post method to obtain token for authorization header
+    protocols: [HTTPS]
+    
 /orders:
   get:
     description: Retrieve a JSON array of orders

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 David L. Whitehurst and CI Wise Inc.
+ * Copyright (c) 2016 David L. Whitehurst
  *
  * Permission is hereby granted, free of charge, to any person 
  * obtaining a copy of this software and associated documentation 
@@ -21,44 +21,60 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package org.ciwise.transport;
+package org.dlw.transport;
 
-import org.ciwise.common.BaseObject;
+import org.dlw.common.BaseObject;
 
 /**
  * @author <a href="mailto:david@ciwise.com">David L. Whitehurst</a>
  *
  */
-public class OrderItemsValueObject extends BaseObject {
+public class OrdersPreTransform extends BaseObject {
+	
+	private int orderId;
+	private String customerName;
+	private String preparedDate;
 	private int orderItemId;
-	private int orderId; // parent
 	private int itemId;
 	private String itemName;
 	private String itemCost;
 	private int itemCount;
-	/* (non-Javadoc)
-	 * @see org.ciwise.common.BaseObject#toString()
+	
+	/**
+	 * @return the orderId
 	 */
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getOrderId() {
+		return orderId;
 	}
-	/* (non-Javadoc)
-	 * @see org.ciwise.common.BaseObject#equals(java.lang.Object)
+	/**
+	 * @param orderId the orderId to set
 	 */
-	@Override
-	public boolean equals(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
 	}
-	/* (non-Javadoc)
-	 * @see org.ciwise.common.BaseObject#hashCode()
+	/**
+	 * @return the customerName
 	 */
-	@Override
-	public int hashCode() {
-		// TODO Auto-generated method stub
-		return 0;
+	public String getCustomerName() {
+		return customerName;
+	}
+	/**
+	 * @param customerName the customerName to set
+	 */
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	/**
+	 * @return the preparedDate
+	 */
+	public String getPreparedDate() {
+		return preparedDate;
+	}
+	/**
+	 * @param preparedDate the preparedDate to set
+	 */
+	public void setPreparedDate(String preparedDate) {
+		this.preparedDate = preparedDate;
 	}
 	/**
 	 * @return the orderItemId
@@ -71,18 +87,6 @@ public class OrderItemsValueObject extends BaseObject {
 	 */
 	public void setOrderItemId(int orderItemId) {
 		this.orderItemId = orderItemId;
-	}
-	/**
-	 * @return the orderId
-	 */
-	public int getOrderId() {
-		return orderId;
-	}
-	/**
-	 * @param orderId the orderId to set
-	 */
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
 	}
 	/**
 	 * @return the itemId
@@ -132,6 +136,29 @@ public class OrderItemsValueObject extends BaseObject {
 	public void setItemCount(int itemCount) {
 		this.itemCount = itemCount;
 	}
-	
-	
+	/* (non-Javadoc)
+	 * @see org.ciwise.common.BaseObject#toString()
+	 */
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/* (non-Javadoc)
+	 * @see org.ciwise.common.BaseObject#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	/* (non-Javadoc)
+	 * @see org.ciwise.common.BaseObject#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

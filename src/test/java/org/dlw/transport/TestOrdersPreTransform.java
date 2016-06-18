@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 David L. Whitehurst and CI Wise Inc.
+ * Copyright (c) 2016 David L. Whitehurst
  *
  * Permission is hereby granted, free of charge, to any person 
  * obtaining a copy of this software and associated documentation 
@@ -21,21 +21,22 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package org.ciwise.transport;
+package org.dlw.transport;
 
 import static org.junit.Assert.*;
 
+import org.dlw.transport.OrdersPreTransform;
 import org.junit.Test;
 
 /**
  * @author <a href="mailto:david@ciwise.com">David L. Whitehurst</a>
  *
  */
-public class TestOrdersValueObject {
+public class TestOrdersPreTransform {
 
 	@Test
-	public void testOrdersValueObject() {
-		OrdersValueObject obj = new OrdersValueObject();
+	public void testConstruct() {
+		OrdersPreTransform obj = new OrdersPreTransform();
 		assertNotNull(obj);
 	}
 

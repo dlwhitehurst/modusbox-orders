@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 David L. Whitehurst and CI Wise Inc.
+ * Copyright (c) 2016 David L. Whitehurst
  *
  * Permission is hereby granted, free of charge, to any person 
  * obtaining a copy of this software and associated documentation 
@@ -21,7 +21,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package org.ciwise.common;
+package org.dlw.common;
 
 import java.io.Serializable;
 

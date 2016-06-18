@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 David L. Whitehurst and CI Wise Inc.
+ * Copyright (c) 2016 David L. Whitehurst
  *
  * Permission is hereby granted, free of charge, to any person 
  * obtaining a copy of this software and associated documentation 
@@ -21,24 +21,28 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package org.ciwise.transport;
+package org.dlw.transport;
 
-import org.ciwise.common.BaseObject;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.dlw.common.BaseObject;
 
 /**
  * @author <a href="mailto:david@ciwise.com">David L. Whitehurst</a>
  *
  */
-public class OrdersPreTransform extends BaseObject {
+public class OrdersValueObject extends BaseObject {
 	
 	private int orderId;
 	private String customerName;
 	private String preparedDate;
-	private int orderItemId;
-	private int itemId;
-	private String itemName;
-	private String itemCost;
-	private int itemCount;
+	
+	List<OrderItemsValueObject> items;
+	
+	public OrdersValueObject() {
+		this.items = new ArrayList<OrderItemsValueObject>();
+	}
 	
 	/**
 	 * @return the orderId
@@ -76,66 +80,6 @@ public class OrdersPreTransform extends BaseObject {
 	public void setPreparedDate(String preparedDate) {
 		this.preparedDate = preparedDate;
 	}
-	/**
-	 * @return the orderItemId
-	 */
-	public int getOrderItemId() {
-		return orderItemId;
-	}
-	/**
-	 * @param orderItemId the orderItemId to set
-	 */
-	public void setOrderItemId(int orderItemId) {
-		this.orderItemId = orderItemId;
-	}
-	/**
-	 * @return the itemId
-	 */
-	public int getItemId() {
-		return itemId;
-	}
-	/**
-	 * @param itemId the itemId to set
-	 */
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
-	}
-	/**
-	 * @return the itemName
-	 */
-	public String getItemName() {
-		return itemName;
-	}
-	/**
-	 * @param itemName the itemName to set
-	 */
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
-	}
-	/**
-	 * @return the itemCost
-	 */
-	public String getItemCost() {
-		return itemCost;
-	}
-	/**
-	 * @param itemCost the itemCost to set
-	 */
-	public void setItemCost(String itemCost) {
-		this.itemCost = itemCost;
-	}
-	/**
-	 * @return the itemCount
-	 */
-	public int getItemCount() {
-		return itemCount;
-	}
-	/**
-	 * @param itemCount the itemCount to set
-	 */
-	public void setItemCount(int itemCount) {
-		this.itemCount = itemCount;
-	}
 	/* (non-Javadoc)
 	 * @see org.ciwise.common.BaseObject#toString()
 	 */
@@ -161,4 +105,17 @@ public class OrdersPreTransform extends BaseObject {
 		return 0;
 	}
 
+	/**
+	 * @return the items
+	 */
+	public List<OrderItemsValueObject> getItems() {
+		return items;
+	}
+
+	/**
+	 * @param items the items to set
+	 */
+	public void setItems(List<OrderItemsValueObject> items) {
+		this.items = items;
+	}
 }
