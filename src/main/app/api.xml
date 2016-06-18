@@ -11,12 +11,12 @@ http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/jso
 
 	<spring:beans>
 	  <spring:bean id="ordersTransform" name="OrdersTransformSingleton"
-		class="org.ciwise.transport.OrdersTransformSingleton" scope="singleton">
+		class="org.dlw.transport.OrdersTransformSingleton" scope="singleton">
 	  </spring:bean>
 	</spring:beans>    
     
     <flow name="api-main">
-        <http:listener config-ref="api-httpListenerConfig" path="/api/*" doc:name="HTTP"/>
+        <http:listener config-ref="api-httpListenerConfig" path="/api/v1/*" doc:name="HTTP"/>
         <apikit:router config-ref="api-config" doc:name="APIkit Router"/>
         <exception-strategy ref="api-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy"/>
     </flow>
