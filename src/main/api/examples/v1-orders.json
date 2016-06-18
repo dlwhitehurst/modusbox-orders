@@ -6,7 +6,6 @@
      "orderItems":[
        {
          "orderItemId": 1323,
-         "orderId": 438577,
          "itemId": 23058,
          "itemName": "Salt",
          "itemCount": 3,
@@ -14,7 +13,6 @@
        },
        {
          "orderItemId": 1323,
-         "orderId": 438577,
          "itemId": 23058,
          "itemName": "Pepper",
          "itemCount": 3,
@@ -29,7 +27,6 @@
      "orderItems":[
        {
          "orderItemId": 1323,
-         "orderId": 438577,
          "itemId": 23058,
          "itemName": "Wheat Flour",
          "itemCount": 3,
@@ -37,7 +34,6 @@
        },
        {
          "orderItemId": 1323,
-         "orderId": 438577,
          "itemId": 23058,
          "itemName": "Tomato Paste",
          "itemCount": 3,

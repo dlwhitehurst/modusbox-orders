@@ -31,7 +31,7 @@ import org.dlw.common.BaseObject;
  */
 public class OrderItemsValueObject extends BaseObject {
 	private int orderItemId;
-	private int orderId; // parent
+//	private int orderId; // parent
 	private int itemId;
 	private String itemName;
 	private String itemCost;
@@ -75,15 +75,15 @@ public class OrderItemsValueObject extends BaseObject {
 	/**
 	 * @return the orderId
 	 */
-	public int getOrderId() {
-		return orderId;
-	}
+//	public int getOrderId() {
+//		return orderId;
+//	}
 	/**
 	 * @param orderId the orderId to set
 	 */
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
-	}
+//	public void setOrderId(int orderId) {
+//		this.orderId = orderId;
+//	}
 	/**
 	 * @return the itemId
 	 */

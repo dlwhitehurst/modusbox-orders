@@ -104,7 +104,7 @@ public class OrdersTransformSingleton extends BaseObject implements Callable {
 	private void createAddOrderItem(Map map, OrdersValueObject valueObj) {
 		// create orderItem for list
 		OrderItemsValueObject itemValueObj = new OrderItemsValueObject();
-		itemValueObj.setOrderId(valueObj.getOrderId());
+//		itemValueObj.setOrderId(valueObj.getOrderId());
 		itemValueObj.setOrderItemId((Integer)map.get("orderItemId"));
 		itemValueObj.setItemId((Integer)map.get("itemId"));
 		itemValueObj.setItemName((String)map.get("itemName"));
