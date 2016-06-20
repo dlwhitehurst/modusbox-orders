@@ -7,10 +7,15 @@ http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/cu
 http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
     <http:listener-config name="api-httpListenerConfig" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration" />
     <apikit:config name="api-config" raml="api.raml" consoleEnabled="true" consolePath="console" doc:name="Router" />
-    <db:mysql-config name="MySQL_Configuration" host="localhost" port="3306" user="root" password="RadioBuzz0706" database="modusbox" doc:name="MySQL Configuration" />
+    <db:mysql-config name="MySQL_Configuration" doc:name="MySQL Configuration" dataSource-ref="jdbcDataSource" />
     <spring:beans>
         <spring:bean id="ordersTransform" name="OrdersTransformSingleton" class="org.dlw.transport.OrdersTransformSingleton" scope="singleton" />
-        <spring:bean id="authFilter" name="AuthenticationSingleton" class="org.dlw.transport.AuthenticationSingleton" scope="singleton" />
+        <spring:bean id="authenticationFilter" name="AuthenticationSingleton" class="org.dlw.transport.AuthenticationSingleton" scope="singleton" />
+        
+        <spring:bean id="jdbcDataSource" class="org.enhydra.jdbc.standard.StandardDataSource" destroy-method="shutdown">
+            <spring:property name="driverName" value="com.mysql.jdbc.Driver" />
+            <spring:property name="url" value="${database.url}" />
+        </spring:bean>
     </spring:beans>
     <flow name="api-main">
         <http:listener config-ref="api-httpListenerConfig" path="/api/v1/*" doc:name="HTTP" />
@@ -37,9 +42,6 @@ http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/jso
     </flow>
     <flow name="get:/orders:api-config">
         <set-payload value="[&#xD;&#xA;  {&#xD;&#xA;    &quot;orderId&quot;: 1233,&#xD;&#xA;    &quot;placementDate&quot;: &quot;2016-06-02&quot;,&#xD;&#xA;    &quot;customerName&quot;: &quot;Sally Hansen&quot;,&#xD;&#xA;     &quot;orderItems&quot;:[&#xD;&#xA;       {&#xD;&#xA;         &quot;orderItemId&quot;: 1323,&#xD;&#xA;         &quot;orderId&quot;: 438577,&#xD;&#xA;         &quot;itemId&quot;: 23058,&#xD;&#xA;         &quot;itemName&quot;: &quot;Salt&quot;,&#xD;&#xA;         &quot;itemCount&quot;: 3,&#xD;&#xA;         &quot;qtyItemCost&quot;: &quot;$2.76&quot;&#xD;&#xA;       },&#xD;&#xA;       {&#xD;&#xA;         &quot;orderItemId&quot;: 1323,&#xD;&#xA;         &quot;orderId&quot;: 438577,&#xD;&#xA;         &quot;itemId&quot;: 23058,&#xD;&#xA;         &quot;itemName&quot;: &quot;Pepper&quot;,&#xD;&#xA;         &quot;itemCount&quot;: 3,&#xD;&#xA;         &quot;qtyItemCost&quot;: &quot;$8.79&quot;&#xD;&#xA;       }&#xD;&#xA;     ]  &#xD;&#xA;  },&#xD;&#xA;  {&#xD;&#xA;    &quot;orderId&quot;: 1233,&#xD;&#xA;    &quot;placementDate&quot;: &quot;2016-06-02&quot;,&#xD;&#xA;    &quot;customerName&quot;: &quot;Billy Wilson&quot;,&#xD;&#xA;     &quot;orderItems&quot;:[&#xD;&#xA;       {&#xD;&#xA;         &quot;orderItemId&quot;: 1323,&#xD;&#xA;         &quot;orderId&quot;: 438577,&#xD;&#xA;         &quot;itemId&quot;: 23058,&#xD;&#xA;         &quot;itemName&quot;: &quot;Wheat Flour&quot;,&#xD;&#xA;         &quot;itemCount&quot;: 3,&#xD;&#xA;         &quot;qtyItemCost&quot;: &quot;$10.12&quot;&#xD;&#xA;       },&#xD;&#xA;       {&#xD;&#xA;         &quot;orderItemId&quot;: 1323,&#xD;&#xA;         &quot;orderId&quot;: 438577,&#xD;&#xA;         &quot;itemId&quot;: 23058,&#xD;&#xA;         &quot;itemName&quot;: &quot;Tomato Paste&quot;,&#xD;&#xA;         &quot;itemCount&quot;: 3,&#xD;&#xA;         &quot;qtyItemCost&quot;: &quot;$9.21&quot;&#xD;&#xA;       }&#xD;&#xA;     ]  &#xD;&#xA;  }&#xD;&#xA;]" doc:name="Set Payload" />
-        <component doc:name="AuthFilter">
-            <spring-object bean="AuthenticationSingleton" />
-        </component>
         <db:select config-ref="MySQL_Configuration" doc:name="Database">
             <db:parameterized-query><![CDATA[SELECT a.orderId, a.customerName, a.placementDate, b.orderItemId, b.itemId, c.itemName, b.itemCount, c.itemCost FROM modusbox.orders a, modusbox.orderitems b, modusbox.items c WHERE a.orderId = b.orderId AND b.itemId = c.itemId]]></db:parameterized-query>
         </db:select>
@@ -60,9 +62,6 @@ http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/jso
     </flow>
     <flow name="get:/orders/{orderId}:api-config">
         <set-payload value="{&#xD;&#xA;  &quot;orderId&quot;: 1233,&#xD;&#xA;  &quot;placementDate&quot;: &quot;2016-06-02&quot;,&#xD;&#xA;  &quot;customerName&quot;: &quot;Sally Hansen&quot;,&#xD;&#xA;   &quot;orderItems&quot;:[&#xD;&#xA;     {&#xD;&#xA;       &quot;orderItemId&quot;: 1323&#xD;&#xA;       &quot;orderId&quot;: 438577,&#xD;&#xA;       &quot;itemId&quot;: 23058,&#xD;&#xA;       &quot;itemCount&quot;: 3&#xD;&#xA;     },&#xD;&#xA;     {&#xD;&#xA;       &quot;orderItemId&quot;: 1323&#xD;&#xA;       &quot;orderId&quot;: 438577,&#xD;&#xA;       &quot;itemId&quot;: 23058,&#xD;&#xA;       &quot;itemCount&quot;: 3&#xD;&#xA;     }&#xD;&#xA;   ]  &#xD;&#xA;}" doc:name="Set Payload" />
-        <component doc:name="AuthFilter">
-            <spring-object bean="AuthenticationSingleton" />
-        </component>
         <db:select config-ref="MySQL_Configuration" doc:name="Database">
             <db:parameterized-query><![CDATA[SELECT a.orderId, a.customerName, a.placementDate, b.orderItemId, b.itemId, c.itemName, b.itemCount, c.itemCost FROM modusbox.orders a, modusbox.orderitems b, modusbox.items c WHERE a.orderId = b.orderId AND b.itemId = c.itemId AND a.orderId = #[message.inboundProperties.'http.uri.params'.orderId]]]></db:parameterized-query>
         </db:select>
@@ -92,9 +91,8 @@ http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/jso
         <component doc:name="Java">
             <spring-object bean="AuthenticationSingleton" />
         </component>
-        <json:object-to-json-transformer doc:name="Object to JSON"/>
-        <logger level="INFO" doc:name="Logger"/>
-        
+        <logger level="INFO" doc:name="Logger" />
+        <json:object-to-json-transformer doc:name="Object to JSON"/>        
     </flow>
     <apikit:mapping-exception-strategy name="api-apiKitGlobalExceptionMapping">
         <apikit:mapping statusCode="404">
