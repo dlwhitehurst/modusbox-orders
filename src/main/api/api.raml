@@ -12,12 +12,21 @@ traits:
       description: This is not secured
             
 /auth:
-  post:
-    description: Post method to obtain token for authorization header
-    protocols: [HTTPS]
-    
-/orders:
+  is: [secured]
   get:
+    description: Get method for token including basic auth request property
+    securedBy: [basic]
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/v1-auth.json
+     
+# normally would use HTTPS to have TLS/SSL encryption around userpass    
+/orders:
+  is: [secured]
+  get:
+    securedBy: [basic]
     description: Retrieve a JSON array of orders
     queryParameters:
       customerName:
@@ -42,7 +51,9 @@ traits:
   delete:
      
   /{orderId}:
+    is: [secured]
     get:
+      securedBy: [basic]
       description: Retrieve a JSON object of specific order id
       responses:
         200:
