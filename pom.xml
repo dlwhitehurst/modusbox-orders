@@ -196,7 +196,29 @@
             <version>${mule.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
+        <!--  for authentication implementation -->
+		<dependency>
+    		<groupId>com.googlecode.jsontoken</groupId>
+    		<artifactId>jsontoken</artifactId>
+    		<version>1.0</version>
+		</dependency>
+		<dependency>
+    		<groupId>com.google.guava</groupId>
+    		<artifactId>guava</artifactId>
+    		<version>18.0</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.apache.commons</groupId>
+    		<artifactId>commons-lang3</artifactId>
+    		<version>3.0</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.mongodb</groupId>
+    		<artifactId>bson</artifactId>
+    		<version>2.3</version>
+		</dependency>
+		<!--  authentication implementation end -->        
+		<dependency>
     		<groupId>mysql</groupId>
     		<artifactId>mysql-connector-java</artifactId>
     		<version>5.1.6</version>
