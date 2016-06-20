@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+    <http:listener-config name="api-httpListenerConfig" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration" />
+    <apikit:config name="api-config" raml="api.raml" consoleEnabled="true" consolePath="console" doc:name="Router" />
+    <db:mysql-config name="MySQL_Configuration" doc:name="MySQL Configuration" dataSource-ref="jdbcDataSource" />
+    <spring:beans>
+        <spring:bean id="ordersTransform" name="OrdersTransformSingleton" class="org.dlw.transport.OrdersTransformSingleton" scope="singleton" />
+        <spring:bean id="authenticationFilter" name="AuthenticationSingleton" class="org.dlw.transport.AuthenticationSingleton" scope="singleton" />
+        
+        <spring:bean id="jdbcDataSource" class="org.enhydra.jdbc.standard.StandardDataSource" destroy-method="shutdown">
+            <spring:property name="driverName" value="com.mysql.jdbc.Driver" />
+            <spring:property name="url" value="${database.url}" />
+        </spring:bean>
+    </spring:beans>
+    <flow name="api-main">
+        <http:listener config-ref="api-httpListenerConfig" path="/api/v1/*" doc:name="HTTP" />
+        <apikit:router config-ref="api-config" doc:name="APIkit Router" />
+        <exception-strategy ref="api-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy" />
+    </flow>
+    <flow name="put:/orders:api-config">
+        <set-payload value="#[NullPayload.getInstance()]" doc:name="Set Payload" />
+    </flow>
+    <flow name="put:/items:api-config">
+        <set-payload value="#[NullPayload.getInstance()]" doc:name="Set Payload" />
+    </flow>
+    <flow name="put:/orderItems:api-config">
+        <set-payload value="#[NullPayload.getInstance()]" doc:name="Set Payload" />
+    </flow>
+    <flow name="delete:/orders:api-config">
+        <set-payload value="#[NullPayload.getInstance()]" doc:name="Set Payload" />
+    </flow>
+    <flow name="delete:/orderItems:api-config">
+        <set-payload value="#[NullPayload.getInstance()]" doc:name="Set Payload" />
+    </flow>
+    <flow name="delete:/items:api-config">
+        <set-payload value="#[NullPayload.getInstance()]" doc:name="Set Payload" />
+    </flow>
+    <flow name="get:/orders:api-config">
+        <set-payload value="[&#xD;&#xA;  {&#xD;&#xA;    &quot;orderId&quot;: 1233,&#xD;&#xA;    &quot;placementDate&quot;: &quot;2016-06-02&quot;,&#xD;&#xA;    &quot;customerName&quot;: &quot;Sally Hansen&quot;,&#xD;&#xA;     &quot;orderItems&quot;:[&#xD;&#xA;       {&#xD;&#xA;         &quot;orderItemId&quot;: 1323,&#xD;&#xA;         &quot;orderId&quot;: 438577,&#xD;&#xA;         &quot;itemId&quot;: 23058,&#xD;&#xA;         &quot;itemName&quot;: &quot;Salt&quot;,&#xD;&#xA;         &quot;itemCount&quot;: 3,&#xD;&#xA;         &quot;qtyItemCost&quot;: &quot;$2.76&quot;&#xD;&#xA;       },&#xD;&#xA;       {&#xD;&#xA;         &quot;orderItemId&quot;: 1323,&#xD;&#xA;         &quot;orderId&quot;: 438577,&#xD;&#xA;         &quot;itemId&quot;: 23058,&#xD;&#xA;         &quot;itemName&quot;: &quot;Pepper&quot;,&#xD;&#xA;         &quot;itemCount&quot;: 3,&#xD;&#xA;         &quot;qtyItemCost&quot;: &quot;$8.79&quot;&#xD;&#xA;       }&#xD;&#xA;     ]  &#xD;&#xA;  },&#xD;&#xA;  {&#xD;&#xA;    &quot;orderId&quot;: 1233,&#xD;&#xA;    &quot;placementDate&quot;: &quot;2016-06-02&quot;,&#xD;&#xA;    &quot;customerName&quot;: &quot;Billy Wilson&quot;,&#xD;&#xA;     &quot;orderItems&quot;:[&#xD;&#xA;       {&#xD;&#xA;         &quot;orderItemId&quot;: 1323,&#xD;&#xA;         &quot;orderId&quot;: 438577,&#xD;&#xA;         &quot;itemId&quot;: 23058,&#xD;&#xA;         &quot;itemName&quot;: &quot;Wheat Flour&quot;,&#xD;&#xA;         &quot;itemCount&quot;: 3,&#xD;&#xA;         &quot;qtyItemCost&quot;: &quot;$10.12&quot;&#xD;&#xA;       },&#xD;&#xA;       {&#xD;&#xA;         &quot;orderItemId&quot;: 1323,&#xD;&#xA;         &quot;orderId&quot;: 438577,&#xD;&#xA;         &quot;itemId&quot;: 23058,&#xD;&#xA;         &quot;itemName&quot;: &quot;Tomato Paste&quot;,&#xD;&#xA;         &quot;itemCount&quot;: 3,&#xD;&#xA;         &quot;qtyItemCost&quot;: &quot;$9.21&quot;&#xD;&#xA;       }&#xD;&#xA;     ]  &#xD;&#xA;  }&#xD;&#xA;]" doc:name="Set Payload" />
+        <db:select config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[SELECT a.orderId, a.customerName, a.placementDate, b.orderItemId, b.itemId, c.itemName, b.itemCount, c.itemCost FROM modusbox.orders a, modusbox.orderitems b, modusbox.items c WHERE a.orderId = b.orderId AND b.itemId = c.itemId]]></db:parameterized-query>
+        </db:select>
+        <component doc:name="Java">
+            <spring-object bean="OrdersTransformSingleton" />
+        </component>
+        <json:object-to-json-transformer doc:name="Object to JSON" />
+        <logger level="INFO" doc:name="Logger" />
+    </flow>
+    <flow name="get:/orderItems:api-config">
+        <set-payload value="[&#xD;&#xA;  {&#xD;&#xA;    &quot;orderItemId&quot;: 1323&#xD;&#xA;    &quot;orderId&quot;: 438577,&#xD;&#xA;&#x9;&quot;itemId&quot;: 23058,&#xD;&#xA;    &quot;itemCount&quot;: 3&#xD;&#xA;  },&#xD;&#xA;  {&#xD;&#xA;    &quot;orderItemId&quot;: 5629&#xD;&#xA;    &quot;orderId&quot;: 89853,&#xD;&#xA;    &quot;itemId&quot;: 3378,&#xD;&#xA;    &quot;itemCount&quot;: 5&#xD;&#xA;  }&#xD;&#xA;]" doc:name="Set Payload" />
+    </flow>
+    <flow name="get:/items:api-config">
+        <set-payload value="[&#xD;&#xA;  {&#xD;&#xA;    &quot;itemId&quot;: 12,&#xD;&#xA;    &quot;itemName&quot;: &quot;12 oz. Salt&quot;,&#xD;&#xA;    &quot;itemCost&quot;: &quot;$2.00&quot;&#xD;&#xA;  },&#xD;&#xA;  {&#xD;&#xA;    &quot;itemId&quot;: 18,&#xD;&#xA;    &quot;itemName&quot;: &quot;6 oz. Ground Pepper&quot;,&#xD;&#xA;    &quot;itemCost&quot;: &quot;$0.80&quot;&#xD;&#xA;  }&#xD;&#xA;]" doc:name="Set Payload" />
+    </flow>
+    <flow name="get:/items/{itemId}:api-config">
+        <set-payload value="{&#xD;&#xA;  &quot;itemId&quot;: 12,&#xD;&#xA;  &quot;itemName&quot;: &quot;12 oz. Salt&quot;,&#xD;&#xA;  &quot;itemCost&quot;: &quot;$2.00&quot;&#xD;&#xA;}" doc:name="Set Payload" />
+    </flow>
+    <flow name="get:/orders/{orderId}:api-config">
+        <set-payload value="{&#xD;&#xA;  &quot;orderId&quot;: 1233,&#xD;&#xA;  &quot;placementDate&quot;: &quot;2016-06-02&quot;,&#xD;&#xA;  &quot;customerName&quot;: &quot;Sally Hansen&quot;,&#xD;&#xA;   &quot;orderItems&quot;:[&#xD;&#xA;     {&#xD;&#xA;       &quot;orderItemId&quot;: 1323&#xD;&#xA;       &quot;orderId&quot;: 438577,&#xD;&#xA;       &quot;itemId&quot;: 23058,&#xD;&#xA;       &quot;itemCount&quot;: 3&#xD;&#xA;     },&#xD;&#xA;     {&#xD;&#xA;       &quot;orderItemId&quot;: 1323&#xD;&#xA;       &quot;orderId&quot;: 438577,&#xD;&#xA;       &quot;itemId&quot;: 23058,&#xD;&#xA;       &quot;itemCount&quot;: 3&#xD;&#xA;     }&#xD;&#xA;   ]  &#xD;&#xA;}" doc:name="Set Payload" />
+        <db:select config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[SELECT a.orderId, a.customerName, a.placementDate, b.orderItemId, b.itemId, c.itemName, b.itemCount, c.itemCost FROM modusbox.orders a, modusbox.orderitems b, modusbox.items c WHERE a.orderId = b.orderId AND b.itemId = c.itemId AND a.orderId = #[message.inboundProperties.'http.uri.params'.orderId]]]></db:parameterized-query>
+        </db:select>
+        <component doc:name="Java">
+            <spring-object bean="OrdersTransformSingleton" />
+        </component>
+        <json:object-to-json-transformer doc:name="Object to JSON" />
+        <logger level="INFO" doc:name="Logger" />
+    </flow>
+    <flow name="get:/orders/{orderId}/orderItems:api-config">
+        <set-payload value="[&#xD;&#xA;  {&#xD;&#xA;    &quot;orderItemId&quot;: 1323&#xD;&#xA;    &quot;orderId&quot;: 438577,&#xD;&#xA;&#x9;&quot;itemId&quot;: 23058,&#xD;&#xA;    &quot;itemCount&quot;: 3&#xD;&#xA;  },&#xD;&#xA;  {&#xD;&#xA;    &quot;orderItemId&quot;: 5629&#xD;&#xA;    &quot;orderId&quot;: 89853,&#xD;&#xA;    &quot;itemId&quot;: 3378,&#xD;&#xA;    &quot;itemCount&quot;: 5&#xD;&#xA;  }&#xD;&#xA;]" doc:name="Set Payload" />
+    </flow>
+    <flow name="get:/orderItems/{orderItemId}:api-config">
+        <set-payload value="{&#xD;&#xA;  &quot;orderItemId&quot;: 1323&#xD;&#xA;  &quot;orderId&quot;: 438577,&#xD;&#xA;  &quot;itemId&quot;: 23058,&#xD;&#xA;  &quot;itemCount&quot;: 3&#xD;&#xA;}" doc:name="Set Payload" />
+    </flow>
+    <flow name="post:/orders:api-config">
+        <set-payload value="#[NullPayload.getInstance()]" doc:name="Set Payload" />
+    </flow>
+    <flow name="post:/items:api-config">
+        <set-payload value="#[NullPayload.getInstance()]" doc:name="Set Payload" />
+    </flow>
+    <flow name="post:/orderItems:api-config">
+        <set-payload value="#[NullPayload.getInstance()]" doc:name="Set Payload" />
+    </flow>
+    <flow name="get:/auth:api-config">
+        <set-payload value="#[NullPayload.getInstance()]" doc:name="Set Payload"/>
+        <component doc:name="Java">
+            <spring-object bean="AuthenticationSingleton" />
+        </component>
+        <logger level="INFO" doc:name="Logger" />
+        <json:object-to-json-transformer doc:name="Object to JSON"/>        
+    </flow>
+    <apikit:mapping-exception-strategy name="api-apiKitGlobalExceptionMapping">
+        <apikit:mapping statusCode="404">
+            <apikit:exception value="org.mule.module.apikit.exception.NotFoundException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property" />
+            <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload" />
+        </apikit:mapping>
+        <apikit:mapping statusCode="405">
+            <apikit:exception value="org.mule.module.apikit.exception.MethodNotAllowedException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property" />
+            <set-payload value="{ &quot;message&quot;: &quot;Method not allowed&quot; }" doc:name="Set Payload" />
+        </apikit:mapping>
+        <apikit:mapping statusCode="415">
+            <apikit:exception value="org.mule.module.apikit.exception.UnsupportedMediaTypeException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property" />
+            <set-payload value="{ &quot;message&quot;: &quot;Unsupported media type&quot; }" doc:name="Set Payload" />
+        </apikit:mapping>
+        <apikit:mapping statusCode="406">
+            <apikit:exception value="org.mule.module.apikit.exception.NotAcceptableException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property" />
+            <set-payload value="{ &quot;message&quot;: &quot;Not acceptable&quot; }" doc:name="Set Payload" />
+        </apikit:mapping>
+        <apikit:mapping statusCode="400">
+            <apikit:exception value="org.mule.module.apikit.exception.BadRequestException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property" />
+            <set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }" doc:name="Set Payload" />
+        </apikit:mapping>
+    </apikit:mapping-exception-strategy>
+</mule>
