@@ -36,7 +36,7 @@ import org.mule.api.lifecycle.Callable;
  * @author <a href="mailto:david@ciwise.com">David L. Whitehurst</a>
  *
  */
-public class AuthenticationSingleton extends BaseObject implements Callable{
+public class AuthenticationSingleton extends BaseObject implements Callable {
 
 	/* (non-Javadoc)
 	 * @see org.mule.api.lifecycle.Callable#onCall(org.mule.api.MuleEventContext)
@@ -56,7 +56,8 @@ public class AuthenticationSingleton extends BaseObject implements Callable{
 					System.out.println("SUCCESS: Authenticated!");
 					
 					// get token and return TokenInfo
-					String token = AuthHelper.createJsonWebToken(user, new Long(1));
+					//String token = AuthHelper.createJsonWebToken(user, new Long(1));
+					String token = "A5Fff444000H3d5j.3d8guh9G0w563BN2aD.2RtiR784Nbplw24";
 					obj = new TokenInfo();
 					obj.setUser(user);
 					obj.setToken(token);
@@ -64,25 +65,45 @@ public class AuthenticationSingleton extends BaseObject implements Callable{
 					obj.setIssued(now.toString());
 					DateTime expires = now.plusDays(1);
 					obj.setExpires(expires.toString());
+					msg.setPayload(obj);
 				} else {
 					// nothing yet
+					msg.setPayload(null);
 				}
 			} else {
 				// return correct error response
+				msg.setPayload(null);
+
 			}
 		} else {
 			// verify authentication/authorization
 			if (validateTokenAuthorizationAttempt(msg)) {
-				String auth =  msg.getInboundProperty("authorization");
-				StringTokenizer toker = new StringTokenizer(auth, ":");
-				toker.nextToken(); // waste first token
-				String token = toker.nextToken();
-				obj = AuthHelper.verifyToken(token);
+				//String auth = msg.getInboundProperty("authorization");
+				//String basic = auth.substring(0, 6); // should be "Basic"
+				//StringTokenizer toker = new StringTokenizer(auth, " ");
+				//toker.nextToken(); // waste first token
+				//String token = toker.nextToken();
+				String token = "A5Fff444000H3d5j.3d8guh9G0w563BN2aD.2RtiR784Nbplw24";
+				if (token.equals("A5Fff444000H3d5j.3d8guh9G0w563BN2aD.2RtiR784Nbplw24")) {
+					// get token and return TokenInfo
+					obj = new TokenInfo();
+					obj.setUser("David");
+					obj.setToken(token);
+					DateTime now = new DateTime();
+					obj.setIssued(now.toString());
+					DateTime expires = now.plusDays(1);
+					obj.setExpires(expires.toString());
+					msg.setPayload(obj);
+				
+				} else {
+					// return error
+					msg.setPayload(null);
+				}
 			} else {
 				// return correct error response
+				msg.setPayload(null);
 			}
 		}
-		msg.setPayload(obj);
 		return msg;
 	}
 	
@@ -141,13 +162,20 @@ public class AuthenticationSingleton extends BaseObject implements Callable{
 	@SuppressWarnings("unused")
 	private boolean validateTokenAuthorizationAttempt(MuleMessage msg) {
 		boolean retVal = false;
+		retVal = true;
+		return retVal;
+		
+		// Postman converting Authorization header to "Basic Og===" Not sure why.
+		
+		/*
 		String auth = msg.getInboundProperty("authorization");
 		StringTokenizer toker = new StringTokenizer(auth, ":");
-		String check = toker.nextToken();
-		if (check.equals("api_token")) {
+		String check = toker.nextToken().substring(0, 5);
+		if (check.equals("Bearer")) {
 			retVal = true;
 		}
 		return retVal;
+		*/
 	}
 	
 	/* (non-Javadoc)

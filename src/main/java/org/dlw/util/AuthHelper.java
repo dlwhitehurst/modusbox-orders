@@ -38,9 +38,8 @@ import net.oauth.jsontoken.crypto.Verifier;
 import net.oauth.jsontoken.discovery.VerifierProvider;
 import net.oauth.jsontoken.discovery.VerifierProviders;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.codec.binary.Base64;
-import org.bson.types.ObjectId;
+import org.apache.commons.lang3.StringUtils;
 import org.dlw.transport.TokenInfo;
 import org.joda.time.DateTime;
 
@@ -68,7 +67,8 @@ public class AuthHelper {
      * @return
      */
     public static String createJsonWebToken(String userId, Long durationDays)    {
-        //Current time and signing algorithm
+        
+    	//Current time and signing algorithm
         Calendar cal = Calendar.getInstance();
         HmacSHA256Signer signer;
         try {
